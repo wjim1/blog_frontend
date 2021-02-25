@@ -11,7 +11,6 @@ import 'element-ui/lib/theme-chalk/icon.css'
 import 'element-ui/lib/theme-chalk/message.css'
 Vue.use(VueAxios, axios)
 Vue.prototype.$message = Message
-Vue.config.productionTip = false
 new Vue({
   router,
   render: h => h(App)

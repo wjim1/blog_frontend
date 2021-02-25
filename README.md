@@ -5,6 +5,11 @@
 yarn install
 ```
 
+## Set .env file
+```
+cp .env.example .env.local
+```
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve
