@@ -93,14 +93,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   .navbar-nav .nav-item {
     margin-left: 10px;
     margin-right: 10px;
-  }
-  .logo-image{
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
   }
 </style>
