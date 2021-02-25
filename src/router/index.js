@@ -11,6 +11,16 @@ const routes = [
     component: Home
   },
   {
+    path: 'auth/login',
+    name: 'auth.login',
+    component: () => import('../views/auth/login')
+  },
+  {
+    path: 'not-found',
+    name: 'not-found',
+    component: () => import('../views/404')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting

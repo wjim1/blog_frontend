@@ -83,11 +83,23 @@
 </template>
 
 <script>
+import { getNavbar } from '../api/navbar'
+
 export default {
   name: 'Navbar',
   data () {
     return {
       isLogged: false
+    }
+  },
+  created () {
+    this.getSome()
+  },
+  methods: {
+    getSome () {
+      getNavbar().then(res => {
+        console.log(res)
+      })
     }
   }
 }
