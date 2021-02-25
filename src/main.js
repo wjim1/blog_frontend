@@ -1,12 +1,17 @@
 import Vue from 'vue'
-import App from './App.vue'
 import './bootstrap'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/js/bootstrap.min'
+import axios from 'axios'
+import App from './App.vue'
 import router from './router'
-
+import VueAxios from 'vue-axios'
+import { Message } from 'element-ui'
+import 'bootstrap/dist/js/bootstrap.min'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'element-ui/lib/theme-chalk/icon.css'
+import 'element-ui/lib/theme-chalk/message.css'
+Vue.use(VueAxios, axios)
+Vue.prototype.$message = Message
 Vue.config.productionTip = false
-
 new Vue({
   router,
   render: h => h(App)
