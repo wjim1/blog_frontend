@@ -44,6 +44,7 @@ http.interceptors.response.use(
           content = value[0]
         })
         Message.error(content)
+        break
       case 500:
       case 501:
       case 503:
