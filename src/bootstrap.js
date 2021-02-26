@@ -11,6 +11,7 @@ window.Popper = import('popper.js').default
 try {
   window.$ = window.jQuery = $
   import('$sass/app.scss')
+  import('vue-material-design-icons/styles.css')
 
   // check if the implementation is available
   if (typeof Promise.prototype.finally !== 'function') {
