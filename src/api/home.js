@@ -6,3 +6,11 @@ export function getCategory () {
     method: 'get'
   })
 }
+
+export function getArticles (params) {
+  return request({
+    url: 'articles',
+    method: 'get',
+    params
+  })
+}

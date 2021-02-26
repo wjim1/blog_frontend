@@ -16,6 +16,10 @@ const routes = [
     component: () => import('../views/auth/login')
   },
   {
+    path: 'article/:id',
+    name: 'article.show'
+  },
+  {
     path: 'not-found',
     name: 'not-found',
     component: () => import('../views/404')

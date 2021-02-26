@@ -6,12 +6,12 @@
           <div class="box box-flush">
             <div class="box-body">
               <ul class="nav nav-pills">
-                <li class="nav-item" v-for="(item, index) in categories" :key="index">
-                  <a class="nav-link" :class="{active: currentThreadsTab === item.name}" href="javascript:;" @click="currentThreadsTab = item.name">{{ item.name }}</a>
+                <li class="nav-item" v-for="item in categories" :key="item.id">
+                  <a class="nav-link" :class="{active: currentIndexTab === item.id}" href="javascript:;" @click="currentIndexTab = item.id">{{ item.name }}</a>
                 </li>
               </ul>
             </div>
-<!--            <threads-list :threads="threads[currentThreadsTab]" @page-changed="handlePageChanged"></threads-list>-->
+            <article-list :articles="articles" @page-changed="handlePageChanged"></article-list>
           </div>
         </div>
         <!--      <div class="col-md-3">-->
@@ -27,31 +27,46 @@
 </template>
 
 <script>
-import { getCategory } from '../api/home'
+import { getCategory, getArticles } from '../api/home'
+import ArticleList from '../views/blog/article-list'
 export default {
   name: 'Home',
   components: {
+    ArticleList
   },
   data () {
     return {
-      threads: {
-        default: {},
-        featured: {},
-        zeroComment: {},
-        recent: {}
-      },
+      articles: [],
       categories: [],
-      currentThreadsTab: ''
+      currentIndexTab: ''
     }
   },
   created () {
     this.getCategories()
   },
+  watch: {
+    currentIndexTab () {
+      // 监听分类索引, 加载数据
+      this.loadArticles(1)
+    }
+  },
   methods: {
     getCategories () {
       getCategory().then(res => {
         this.categories = res.data
-        this.currentThreadsTab = res.data[0].name
+        this.currentIndexTab = res.data[0].id
+      })
+    },
+    handlePageChanged (page) {
+      console.log(page)
+    },
+    loadArticles (page = 1) {
+      const query = {
+        page: page,
+        category: this.currentIndexTab
+      }
+      getArticles(query).then(res => {
+        this.articles = res.data
       })
     }
   }
