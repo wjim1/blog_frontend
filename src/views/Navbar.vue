@@ -87,7 +87,7 @@ import { getNavbar } from '../api/navbar'
 import NavSearch from '../components/nav-search'
 export default {
   name: 'Navbar',
-  components:{
+  components: {
     NavSearch
   },
   data () {
@@ -96,7 +96,7 @@ export default {
     }
   },
   created () {
-    this.getSome()
+    // this.getSome()
   },
   methods: {
     getSome () {
