@@ -84,9 +84,12 @@
 
 <script>
 import { getNavbar } from '../api/navbar'
-
+import NavSearch from '../components/nav-search'
 export default {
   name: 'Navbar',
+  components:{
+    NavSearch
+  },
   data () {
     return {
       isLogged: false
