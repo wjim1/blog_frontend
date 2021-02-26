@@ -37,8 +37,7 @@
       </li>
       <li class="list-group-item
         d-flex align-items-center
-        justify-content-center p-5"
-        v-if="articles.length === 0">
+        justify-content-center p-5" v-if="articles.data.length === 0">
         <empty-state message="该分类下无相关讨论哦~"></empty-state>
       </li>
     </ul>
@@ -62,12 +61,7 @@ export default {
     CommentIcon
   },
   props: {
-    articles: {
-      type: Array,
-      default () {
-        return []
-      }
-    }
+    articles: Object
   },
   methods: {
     handleChange (page) {

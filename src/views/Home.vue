@@ -36,7 +36,17 @@ export default {
   },
   data () {
     return {
-      articles: [],
+      articles: {
+        data: [],
+        meta: {
+          total: 1,
+          per_page: 1,
+          from: 1,
+          to: 1,
+          last_page: 1,
+          current_page: 1
+        }
+      },
       categories: [],
       currentIndexTab: ''
     }
