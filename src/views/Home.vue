@@ -58,7 +58,7 @@ export default {
       })
     },
     handlePageChanged (page) {
-      console.log(page)
+      this.loadArticles(page)
     },
     loadArticles (page = 1) {
       const query = {
@@ -66,7 +66,7 @@ export default {
         category: this.currentIndexTab
       }
       getArticles(query).then(res => {
-        this.articles = res.data
+        this.articles = res
       })
     }
   }

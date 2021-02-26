@@ -2,7 +2,7 @@
   <div class="threads-items mb-2">
     <ul class="list-group list-group-flush">
       <li class="list-group-item d-md-flex d-block align-items-center justify-content-between cursor-pointer"
-          v-for="item in articles"
+          v-for="item in articles.data"
           :key="item.id"
           @click="$router.push({name: 'articles.show', params:{id: item.id}})">
         <div class="d-flex align-items-center w-70">
@@ -42,7 +42,7 @@
         <empty-state message="该分类下无相关讨论哦~"></empty-state>
       </li>
     </ul>
-<!--    <paginator :meta="articles.meta" @change="handleChange"></paginator>-->
+    <paginator :meta="articles.meta" @change="handleChange"></paginator>
   </div>
 </template>
 
@@ -51,13 +51,15 @@ import EmptyState from './empty-state'
 import LikeIcon from '$icons/Heart'
 import CommentIcon from '$icons/Comment'
 import ViewIcon from '$icons/Eye'
+import Paginator from '../../components/paginator'
 export default {
   name: 'article-list',
   components: {
-    EmptyState,
+    ViewIcon,
     LikeIcon,
-    CommentIcon,
-    ViewIcon
+    Paginator,
+    EmptyState,
+    CommentIcon
   },
   props: {
     articles: {
