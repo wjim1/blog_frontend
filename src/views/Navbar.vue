@@ -48,13 +48,13 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
                     <div class="dropdown-item">
-                      <router-link :to="{ name: 'users.show', params: { username: currentUser.username } }">
+                      <router-link :to="{ name: 'users.show', params: { name: currentUser.name } }">
                         <div class="text-16 text-gray-30">{{ currentUser.name }}</div>
-                        <div>@{{ currentUser.username }}</div>
+                        <div>@{{ currentUser.name }}</div>
                       </router-link>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <router-link class="dropdown-item" :to="{ name: 'users.show', params: { username: currentUser.username } }" exact>
+                    <router-link class="dropdown-item" :to="{ name: 'users.show', params: { name: currentUser.name } }" exact>
                       <account-icon class="mr-1"></account-icon>
                       个人中心
                     </router-link>
@@ -84,6 +84,7 @@
 
 <script>
 import { getNavbar } from '../api/navbar'
+import { mapGetters } from 'vuex'
 import NavSearch from '../components/nav-search'
 export default {
   name: 'Navbar',
@@ -91,9 +92,10 @@ export default {
     NavSearch
   },
   data () {
-    return {
-      isLogged: false
-    }
+    return {}
+  },
+  computed: {
+    ...mapGetters(['isLogged'])
   },
   created () {
     // this.getSome()
