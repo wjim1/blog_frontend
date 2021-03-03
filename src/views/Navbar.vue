@@ -89,7 +89,7 @@ import AccountIcon from '$icons/Account'
 import AccountEditIcon from '$icons/AccountEdit'
 import LogoutVariant from '$icons/LogoutVariant'
 import { getNavbar } from '../api/navbar'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import NavSearch from '../components/nav-search'
 export default {
   name: 'Navbar',
@@ -103,6 +103,7 @@ export default {
     ...mapGetters(['isLogged', 'token', 'currentUser'])
   },
   methods: {
+    ...mapActions(['logout']),
     getSome () {
       getNavbar().then(res => {
         console.log(res)

@@ -8,10 +8,13 @@ export function login (data) {
   })
 }
 
-export function logout () {
+export function logout (token) {
   return request({
     url: 'auth/logout',
-    method: 'post'
+    method: 'post',
+    header: {
+      Authorization: 'Bearer' + token
+    }
   })
 }
 export function getUser (token) {

@@ -12,8 +12,8 @@ const http = axios.create({
 http.interceptors.request.use(
   config => {
     // do something before request is sent
-    if (store.state.user.token) {
-      const token = store.state.user.token
+    if (store.getters.token) {
+      const token = store.getters.token
       // config.headers.common.Authorization = `Bearer ${store.getters.token}`
       // http.defaults.headers.common.Authorization = `Bearer ${store.getters.token}`
       http.defaults.headers.common.Authorization = `Bearer ${token}`
@@ -24,14 +24,12 @@ http.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-
 // 响应拦截
 http.interceptors.response.use(
   response => {
     return response.data
   }, error => {
-    console.log(error)
-    switch (error.response.statusCode) {
+    switch (error.response.status) {
       case 401:
         if (window.location.pathname !== 'auth/login') {
           window.location.href = '/auth/login'
@@ -62,7 +60,5 @@ http.interceptors.response.use(
     return Promise.reject(error.response)
   }
 )
-
-
 
 export default http

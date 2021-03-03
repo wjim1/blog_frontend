@@ -1,4 +1,4 @@
-import { login, getUser } from '../../api/auth/index'
+import { login, logout, getUser } from '../../api/auth/index'
 import { getToken, setToken } from '../../utils/auth/auth'
 
 const getDefaultState = () => {
@@ -37,7 +37,10 @@ const actions = {
   login ({ commit, dispatch }, userInfo) {
     const { email, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ email: email, password: password }).then(response => {
+      login({
+        email: email,
+        password: password
+      }).then(response => {
         // token 存入本地缓存
         setToken(response.access_token)
 
@@ -61,6 +64,17 @@ const actions = {
         resolve(response)
       }).catch(error => {
         reject(error)
+      })
+    })
+  },
+  logout ({ commit, state, dispatch }) {
+    return new Promise((resolve, reject) => {
+      logout(state.token).then(() => {
+        commit('SET_TOKEN', '')
+        commit('SET_NAME', '')
+        commit('SET_EMAIL', '')
+        commit('SET_AVATAR', '')
+        setToken('')
       })
     })
   }
