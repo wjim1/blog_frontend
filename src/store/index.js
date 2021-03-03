@@ -1,60 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import request from '../utils/http/request'
-import { isEmpty } from 'element-ui/src/utils/util'
+import getters from './getters'
+
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-    user: {},
-    token: null,
+// https://webpack.js.org/guides/dependency-management/#requirecontext
+const modulesFiles = require.context('./modules', true, /\.js$/)
 
-  },
-  mutations: {
-    setUser (state, value) {
-      this.state.user = value
-    },
-    setToken (state, value) {
-      this.state.token = value
-    }
-  },
-  actions: {
-    attemptLogin (context, value) {
-      return request({
-        url: 'auth/login',
-        method: 'post',
-        params: value
-      }).then(res => {
-        context.commit('setToken', res.access_token)
-        localStorage.setItem('user_token', res.access_token)
-      })
-    },
-    attemptRegister (context, value) {
-      return request({
-        url: 'auth/register',
-        method: 'post',
-        params: value
-      })
-    },
-    logout () {
-      localStorage.removeItem('user_token')
-      this.$store.dispatch('setUser', {})
-      this.$store.dispatch('setToken', null)
-      this.$router.push('home')
-    },
-    loadUser (context, value) {
+// you do not need `import app from './modules/app'`
+// it will auto require all vuex module from modules file
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+  // set './app.js' => 'app'
+  const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = modulesFiles(modulePath)
+  modules[moduleName] = value.default
+  return modules
+}, {})
 
-    }
-  },
-  getters: {
-    getUser (state) {
-      return state.user
-    },
-    getToken (state) {
-      return state.token
-    },
-    isLogged (state) {
-      return !isEmpty(state.token)
-    }
-  }
+const store = new Vuex.Store({
+  modules,
+  getters
 })
+
+export default store
