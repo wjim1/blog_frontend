@@ -41,16 +41,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['attemptLogin']),
-    async submit () {
+    ...mapActions(['login']),
+    submit () {
       const params = {
         email: this.email,
         password: this.password
       }
       try {
-        await this.attemptLogin(params)
+        this.$store.dispatch('login', params)
+        // await this.login(params)
         this.$message.success('欢迎回来~')
-        this.$router.push({ name: 'home' })
       } catch (e) {
         if (e.status !== 422) {
           this.$message.error('账号密码错误!')

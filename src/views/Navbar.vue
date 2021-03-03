@@ -83,22 +83,24 @@
 </template>
 
 <script>
+import BellIcon from '$icons/Bell'
+import PlusIcon from '$icons/Plus'
+import AccountIcon from '$icons/Account'
+import AccountEditIcon from '$icons/AccountEdit'
+import LogoutVariant from '$icons/LogoutVariant'
 import { getNavbar } from '../api/navbar'
 import { mapGetters } from 'vuex'
 import NavSearch from '../components/nav-search'
 export default {
   name: 'Navbar',
   components: {
-    NavSearch
+    NavSearch, BellIcon, PlusIcon, LogoutVariant, AccountIcon, AccountEditIcon
   },
   data () {
     return {}
   },
   computed: {
-    ...mapGetters(['isLogged'])
-  },
-  created () {
-    // this.getSome()
+    ...mapGetters(['isLogged', 'token', 'currentUser'])
   },
   methods: {
     getSome () {

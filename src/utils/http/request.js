@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import router from '../../router'
+import store from '@/store'
 
 const http = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
@@ -11,6 +12,12 @@ const http = axios.create({
 http.interceptors.request.use(
   config => {
     // do something before request is sent
+    if (store.state.user.token) {
+      const token = store.state.user.token
+      // config.headers.common.Authorization = `Bearer ${store.getters.token}`
+      // http.defaults.headers.common.Authorization = `Bearer ${store.getters.token}`
+      http.defaults.headers.common.Authorization = `Bearer ${token}`
+    }
     return config
   }, error => {
     // do something with request error
@@ -23,7 +30,8 @@ http.interceptors.response.use(
   response => {
     return response.data
   }, error => {
-    switch (error.response.status) {
+    console.log(error)
+    switch (error.response.statusCode) {
       case 401:
         if (window.location.pathname !== 'auth/login') {
           window.location.href = '/auth/login'
@@ -54,5 +62,7 @@ http.interceptors.response.use(
     return Promise.reject(error.response)
   }
 )
+
+
 
 export default http
