@@ -31,6 +31,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { login } from '../../api/auth/index'
 export default {
   name: 'login',
   components: {},
@@ -41,21 +42,21 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login']),
-    submit () {
+    async submit () {
       const params = {
         email: this.email,
         password: this.password
       }
-      try {
-        this.$store.dispatch('login', params)
-        // await this.login(params)
-        this.$message.success('欢迎回来~')
-      } catch (e) {
-        if (e.status !== 422) {
-          this.$message.error('账号密码错误!')
-        }
-      }
+      const  res = await login(params)
+      // try {
+      //   this.$store.dispatch('login', params)
+      //   // await this.login(params)
+      //   this.$message.success('欢迎回来~')
+      // } catch (e) {
+      //   if (e.status !== 422) {
+      //     this.$message.error('账号密码错误!')
+      //   }
+      // }
     }
   }
 }

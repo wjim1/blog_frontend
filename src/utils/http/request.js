@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 import router from '../../router'
 import store from '@/store'
+import { getToken } from '$utils/auth/auth'
 
 const http = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
@@ -12,11 +13,12 @@ const http = axios.create({
 http.interceptors.request.use(
   config => {
     // do something before request is sent
-    if (store.getters.token) {
-      const token = store.getters.token
+    const token = getToken()
+    if (token) {
       // config.headers.common.Authorization = `Bearer ${store.getters.token}`
       // http.defaults.headers.common.Authorization = `Bearer ${store.getters.token}`
-      http.defaults.headers.common.Authorization = `Bearer ${token}`
+      http.defaults.headers.Authorization = `Bearer ${token}`
+      console.log('有token')
     }
     return config
   }, error => {
@@ -32,7 +34,7 @@ http.interceptors.response.use(
     switch (error.response.status) {
       case 401:
         if (window.location.pathname !== 'auth/login') {
-          window.location.href = '/auth/login'
+          // window.location.href = '/auth/login'
         }
         break
       case 403:

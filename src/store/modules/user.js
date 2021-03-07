@@ -1,9 +1,10 @@
 import { login, logout, getUser } from '../../api/auth/index'
-import { getToken, setToken } from '../../utils/auth/auth'
+import { getToken } from '$utils/auth/auth'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
+    user: {},
     currentUser: {
       name: '',
       email: '',
@@ -18,6 +19,10 @@ const mutations = {
   // 设置token
   SET_TOKEN: (state, token) => {
     state.token = token
+  },
+  // 设置用户
+  SET_USER: (state, user) => {
+    state.user = user
   },
   // 设置用户名
   SET_NAME: (state, name) => {
@@ -34,13 +39,14 @@ const mutations = {
 }
 
 const actions = {
-  login ({ commit, dispatch }, userInfo) {
+  login({ commit, dispatch }, userInfo) {
     const { email, password } = userInfo
     return new Promise((resolve, reject) => {
       login({
         email: email,
         password: password
       }).then(response => {
+        debugger
         // token 存入本地缓存
         setToken(response.access_token)
 
@@ -49,25 +55,31 @@ const actions = {
 
         // 加载用户信息
         dispatch('getInfo')
-        resolve()
       }).catch(error => {
         reject(error)
       })
     })
   },
-  getInfo ({ commit, state }) {
+  getInfo({ commit, state }) {
+    const token = getToken()
+    getUser(token).then(res => {
+      console.log(res)
+    })
     return new Promise((resolve, reject) => {
-      getUser(state.token).then(response => {
-        commit('SET_NAME', response.name)
-        commit('SET_EMAIL', response.email)
-        commit('SET_AVATAR', response.avatar)
-        resolve(response)
-      }).catch(error => {
-        reject(error)
-      })
+
+      //   .then(response => {
+      //   console.log(response)
+      //   commit('SET_NAME', response.name)
+      //   commit('SET_EMAIL', response.email)
+      //   commit('SET_AVATAR', response.avatar)
+      //   commit('SET_USER', response)
+      //   resolve(response)
+      // }).catch(error => {
+      //   reject(error)
+      // })
     })
   },
-  logout ({ commit, state, dispatch }) {
+  logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')

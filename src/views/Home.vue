@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { getCategory, getArticles } from '../api/home'
+import { getCategory, getArticles } from '@/api/home'
 import ArticleList from '../views/blog/article-list'
 export default {
   name: 'Home',
